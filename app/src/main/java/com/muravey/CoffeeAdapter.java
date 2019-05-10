@@ -13,6 +13,12 @@ import java.util.ArrayList;
 
 public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder> {
 
+    public interface ClickListener {
+        void onClick (int position);
+    }
+
+    private ClickListener clickListener;
+
     ArrayList<CoffeeModel> mlist;
 
     private Context mContext;
@@ -28,7 +34,9 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         View view = layoutInflater.inflate(R.layout.rv_coffee_items, viewGroup, false);
         ViewHolder  viewHolder = new ViewHolder(view);
+
         return viewHolder;
+
 
 
     }
@@ -52,6 +60,10 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder
 
     }
 
+    public void setClickListener(ClickListener clickListener){
+        this.clickListener = clickListener;
+    }
+
     @Override
     public int getItemCount() {
         return mlist.size();
@@ -68,6 +80,13 @@ public class CoffeeAdapter extends RecyclerView.Adapter<CoffeeAdapter.ViewHolder
             item_name = itemView.findViewById(R.id.item_name);
             item_place = itemView.findViewById(R.id.item_place);
             item_price = itemView.findViewById(R.id.item_price);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onClick(getAdapterPosition());
+                }
+            });
 
         }
     }

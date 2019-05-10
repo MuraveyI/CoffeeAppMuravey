@@ -1,18 +1,20 @@
 package com.muravey;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
     ArrayList<CoffeeModel> coffeesList;
+
 
 
     @Override
@@ -36,8 +38,20 @@ public class MainActivity extends AppCompatActivity {
         coffeesList.add(new CoffeeModel(R.drawable.raf, "Raf", "USA", "2,44"));
 
 
+
         CoffeeAdapter adapter = new CoffeeAdapter(coffeesList);
         recyclerView.setAdapter(adapter);
+        adapter.setClickListener(new CoffeeAdapter.ClickListener() {
+            @Override
+            public void onClick(int position) {
+                CoffeeModel coffeeModel = coffeesList.get(position);
+                Intent intent = new Intent(MainActivity.this, LatteCoffee.class);
+                intent.putExtra("coffee", coffeeModel);
+                startActivity(intent);
 
+            }
+        });
     }
 }
+
+

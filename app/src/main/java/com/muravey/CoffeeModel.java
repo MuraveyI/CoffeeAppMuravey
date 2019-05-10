@@ -1,6 +1,8 @@
 package com.muravey;
 
-public class CoffeeModel {
+import java.io.Serializable;
+
+public class CoffeeModel implements Serializable {
 
     private int image;
     private String name, place, price;
